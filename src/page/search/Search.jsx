@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 
-const Search = () => {
+const Search = ({handler}) => {
     const [value, setValue] = useState('');
 
     const onValueHandle = event => {
         setValue(event.target.value)
     };
 
+    const onClick = () => {
+        if(value === '') return;
+        handler(value);
+        setValue('');
+    };
+
     return(
         <div className="search">
             <input value={value} onChange={(e) => onValueHandle(e)} type="text" className="search__input" placeholder="Enter the title of the movie"/>
-            <button className="search__btn">search</button>
+            <button className="search__btn" onClick={onClick}>search</button>
         </div>
     );
 };
