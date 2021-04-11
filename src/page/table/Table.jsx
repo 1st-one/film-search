@@ -1,35 +1,20 @@
 import React from 'react';
 
-const Table = () => {
-    return(
+const Table = ({ data }) => {
+
+    return (
         <div className="table">
             <span className="table__label">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             </span>
             <div className="table__list">
-                <div className="table__list-item">
-                    <span className="name">Coming America 2</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/ru/c/c0/Coming_2_America.jpg" alt=""/>
-                    <span className="year">2016</span>
-                </div>
-
-                <div className="table__list-item">
-                    <span className="name">Coming America 2</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/ru/c/c0/Coming_2_America.jpg" alt=""/>
-                    <span className="year">2016</span>
-                </div>
-
-                <div className="table__list-item">
-                    <span className="name">Coming America 2</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/ru/c/c0/Coming_2_America.jpg" alt=""/>
-                    <span className="year">2016</span>
-                </div>
-
-                <div className="table__list-item">
-                    <span className="name">Coming America 2</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/ru/c/c0/Coming_2_America.jpg" alt=""/>
-                    <span className="year">2016</span>
-                </div>
+                {data.map(item => {
+                    return (<div key={item.imdbID} className="table__list-item">
+                        <span className="name">{item.Title}</span>
+                        <img src={item.Poster} alt="" />
+                        <span className="year">{item.Year}</span>
+                    </div>)
+                })}
             </div>
         </div>
     );
