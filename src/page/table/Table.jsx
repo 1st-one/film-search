@@ -2,9 +2,6 @@ import React, { useEffect } from 'react';
 import icon from '../../imgs/defaultIcon.png';
 
 const Table = ({ data, value, isLoading }) => {
-    useEffect(() => {
-        console.log(data)
-    })
 
     return (
         <div className="table">
