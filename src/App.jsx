@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { fetchGet } from './gateway';
 import Header from './page/header/Header';
 import Search from './page/search/Search';
 import Table from './page/table/Table';
+import { connect } from 'react-redux';
+import * as searchAction from './store';
 
-const baseUrl = 'https://www.omdbapi.com/?s=evil&apikey=4a3b711b';
-
-const App = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [value, setValue] = useState('');
+const App = ({ search, req, suc, fail }) => {
 
   useEffect(() => {
     fetchGet()
       .then(res => {
-          setData(res.Search);
-          setLoading(true);
+          suc(res.Search)
       })
   }, [])
 
   const handler = value => {
-    setValue(value);
-
     fetchGet(value)
       .then(res => {
         if(res.Response === 'True') {
-          setData(res.Search);
-          setLoading(true);
-        } else setLoading(false);
+          suc(res.Search)
+          req(value)
+        } else fail();
       })
   };
+
+  const {data, value, isLoading} = search;
 
   return (
     <div className="container">
@@ -40,4 +36,18 @@ const App = () => {
   );
 };
 
-export default App;
+const mapState = state => {
+  return {
+    search: state
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    req: (value) => dispatch(searchAction.request(value)),
+    suc: (data) => dispatch(searchAction.success(data)),
+    fail: () => dispatch(searchAction.failed())
+  };
+}
+
+export default connect(mapState, mapDispatch)(App);

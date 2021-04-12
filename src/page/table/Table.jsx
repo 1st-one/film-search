@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import icon from '../../imgs/defaultIcon.png';
 
 const Table = ({ data, value, isLoading }) => {
-
+    debugger
     return (
         <div className="table">
             <span className="table__label">
