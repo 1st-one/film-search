@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { fetchGet } from './gateway';
 import Header from './page/header/Header';
 import Search from './page/search/Search';
@@ -10,15 +10,20 @@ import FilmPage from './page/film/FilmPage';
 
 const url = 'https://www.youtube.com/results?search_query='
 
-const App = ({ search, req, suc, fail }) => {
-  const [title, setTitle] = useState('');
-
+const App = ({ search, req, suc, fail, ttl }) => {
   useEffect(() => {
     fetchGet()
       .then(res => {
         suc(res.Search)
       })
   }, [suc])
+
+  const handlerHomeClick = () => {
+    fetchGet()
+      .then(res => {
+        suc(res.Search)
+      })
+  };
 
   const handler = value => {
     fetchGet(value)
@@ -32,21 +37,9 @@ const App = ({ search, req, suc, fail }) => {
 
   const posterHandler = id => {
     const dataMovie = search.data.filter(item => item.imdbID === id);
-    // const api_key = 'AIzaSyCBFtDjKegL9nuvU1BxTH0t1YERDEm5mtw';
-    // const idVideo = '8ugaeA-nMTc';
-
-    // `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${idVideo}&key=${api_key}`
-
-    // fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${idVideo}&key=${api_key}`)
-    //   .then(res => res.json())
-    //   .then(res => {
-    //     console.log(res)
-    //   })
-
     const title = [dataMovie[0].Title, dataMovie[0].Type, dataMovie[0].Year]
     const variableString = title.join('+').toLowerCase();
-
-    setTitle(`${url}${variableString.split(' ').join('+')}`);
+    ttl(`${url}${variableString.split(' ').join('+')}`);
   };
 
   const { data, value, isLoading } = search;
@@ -56,13 +49,13 @@ const App = ({ search, req, suc, fail }) => {
       <div className="container">
         <Switch>
           <Route exact path='/'>
-            <Header />
+            <Header handlerHomeClick={handlerHomeClick}/>
             <Search handler={handler} />
             <Table posterHandler={posterHandler} data={data} value={value} isLoading={isLoading} />
           </Route>
           <Route path='/film/:filmId/:filmTitle'>
             <Header />
-            <FilmPage title={title} />
+            <FilmPage posterHandler={posterHandler}/>
           </Route>
           <Redirect to='/'></Redirect>
         </Switch>
@@ -73,7 +66,8 @@ const App = ({ search, req, suc, fail }) => {
 
 const mapState = state => {
   return {
-    search: state
+    search: state.reducerSearch,
+    title: state.reducerTitle,
   };
 };
 
@@ -81,7 +75,8 @@ const mapDispatch = (dispatch) => {
   return {
     req: (value) => dispatch(searchAction.request(value)),
     suc: (data) => dispatch(searchAction.success(data)),
-    fail: () => dispatch(searchAction.failed())
+    fail: () => dispatch(searchAction.failed()),
+    ttl: (title) => dispatch(searchAction.setTitle(title))
   };
 }
 

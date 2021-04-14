@@ -6,3 +6,13 @@ export const fetchGet = (value = 'evil') => {
             } else throw new Error('Get request is failed');
         })
 };
+
+
+// API YouTube ????????
+ // const api_key = 'AIzaSyCBFtDjKegL9nuvU1BxTH0t1YERDEm5mtw';
+    // const idVideo = '8ugaeA-nMTc';
+    // fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${idVideo}&key=${api_key}`)
+    //   .then(res => res.json())
+    //   .then(res => {
+    //     console.log(res)
+    //   })

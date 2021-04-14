@@ -1,7 +1,18 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+
 const SEARCH_REQUEST = 'SEARCH/SEARCH_REQUEST';
 const SEARCH_SUCCESS = 'SEARCH/SEARCH_SUCCESS';
 const SEARCH_FAILED = 'SEARCH/SEARCH_FAILED';
+const SET_TITLE = 'TITLE/SET_TITLE';
+
+export const setTitle = (title) => {
+    return {
+        type: SET_TITLE,
+        payload: {
+            title
+        }
+    };
+};
 
 export const request = (value) => {
     return {
@@ -27,13 +38,29 @@ export const failed = () => {
     };
 };
 
-const intialState = {
+const intialStateSearch = {
     data: [],
     isLoading: true,
     value: ''
 };
 
-const reducer = (state = intialState, action) => {
+const initialStateTitle = {
+    title: ''
+};
+
+const reducerTitle = (state = initialStateTitle, action) => {
+    switch (action.type) {
+        case SET_TITLE:
+            return {
+                ...state,
+                title: action.payload.title
+            }
+        default:
+            return state;
+    }
+};
+
+const reducerSearch = (state = intialStateSearch, action) => {
     switch (action.type) {
         case SEARCH_REQUEST:
             return {
@@ -59,5 +86,11 @@ const reducer = (state = intialState, action) => {
     };
 };
 
-export const store = createStore(reducer, []
+const rootReducer = combineReducers({
+    reducerSearch,
+    reducerTitle
+});
+
+export const store = createStore(rootReducer, []
     +  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+    console.log(store.getState())
