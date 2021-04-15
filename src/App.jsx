@@ -7,16 +7,25 @@ import { connect } from 'react-redux';
 import * as searchAction from './store';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import FilmPage from './page/film/FilmPage';
+import { local } from './gateway';
 
 const url = 'https://www.youtube.com/results?search_query='
 
-const App = ({ search, req, suc, fail, ttl }) => {
+const App = ({ search, req, suc, fail, ttl, thm }) => {
+
   useEffect(() => {
     fetchGet()
       .then(res => {
         suc(res.Search)
       })
-  }, [suc])
+    thm(local.get('theme'));
+  }, [suc, thm])
+
+
+  const onThemeHandler = (e) => {
+    const el = e.target.classList.value;
+    thm(local.set('theme', el));
+  };
 
   const handlerHomeClick = () => {
     fetchGet()
@@ -49,13 +58,13 @@ const App = ({ search, req, suc, fail, ttl }) => {
       <div className="container">
         <Switch>
           <Route exact path='/'>
-            <Header handlerHomeClick={handlerHomeClick}/>
+            <Header handlerHomeClick={handlerHomeClick} onThemeHandler={onThemeHandler} />
             <Search handler={handler} />
             <Table posterHandler={posterHandler} data={data} value={value} isLoading={isLoading} />
           </Route>
           <Route path='/film/:filmId/:filmTitle'>
             <Header />
-            <FilmPage posterHandler={posterHandler}/>
+            <FilmPage posterHandler={posterHandler} />
           </Route>
           <Redirect to='/'></Redirect>
         </Switch>
@@ -68,6 +77,7 @@ const mapState = state => {
   return {
     search: state.reducerSearch,
     title: state.reducerTitle,
+    theme: state.reducerTheme,
   };
 };
 
@@ -76,8 +86,9 @@ const mapDispatch = (dispatch) => {
     req: (value) => dispatch(searchAction.request(value)),
     suc: (data) => dispatch(searchAction.success(data)),
     fail: () => dispatch(searchAction.failed()),
-    ttl: (title) => dispatch(searchAction.setTitle(title))
+    ttl: (title) => dispatch(searchAction.setTitle(title)),
+    thm: (theme) => dispatch(searchAction.setTheme(theme))
   };
-}
+};
 
 export default connect(mapState, mapDispatch)(App);

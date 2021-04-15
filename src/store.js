@@ -4,6 +4,16 @@ const SEARCH_REQUEST = 'SEARCH/SEARCH_REQUEST';
 const SEARCH_SUCCESS = 'SEARCH/SEARCH_SUCCESS';
 const SEARCH_FAILED = 'SEARCH/SEARCH_FAILED';
 const SET_TITLE = 'TITLE/SET_TITLE';
+const SET_THEME = 'THEME/SET_THEME';
+
+export const setTheme = (theme) => {
+    return {
+        type: SET_THEME,
+        payload: {
+            theme
+        }
+    };
+};
 
 export const setTitle = (title) => {
     return {
@@ -48,6 +58,18 @@ const initialStateTitle = {
     title: ''
 };
 
+const reducerTheme = (state = { theme: '' }, action) => {
+    switch (action.type) {
+        case SET_THEME:
+            return {
+                ...state,
+                theme: action.payload.theme
+            }
+        default:
+            return state;
+    }
+};
+
 const reducerTitle = (state = initialStateTitle, action) => {
     switch (action.type) {
         case SET_TITLE:
@@ -88,7 +110,8 @@ const reducerSearch = (state = intialStateSearch, action) => {
 
 const rootReducer = combineReducers({
     reducerSearch,
-    reducerTitle
+    reducerTitle,
+    reducerTheme
 });
 
 export const store = createStore(rootReducer, []

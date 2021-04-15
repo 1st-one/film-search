@@ -7,6 +7,15 @@ export const fetchGet = (value = 'evil') => {
         })
 };
 
+export const local = {
+    set(key, value) {
+        return localStorage.setItem(key, value);
+    },
+    get(key) {
+        return localStorage.getItem(key);
+    }
+};
+
 
 // API YouTube ????????
  // const api_key = 'AIzaSyCBFtDjKegL9nuvU1BxTH0t1YERDEm5mtw';
