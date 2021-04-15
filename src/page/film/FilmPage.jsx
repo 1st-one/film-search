@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchGet } from '../../gateway';
+import { fetchGet, local } from '../../gateway';
 import icon from '../../imgs/defaultIcon.png';
 import TableList from '../table/TableList';
 import * as searchAction from '../../store';
@@ -35,7 +35,13 @@ const FilmPage = ({ search, titleObj, match, posterHandler, suc }) => {
                             </div>
                             <div className="table__list">
                                 <div className="table__list-item">
-                                    <span className="name">{item.Title}</span>
+                                    <span 
+                                        className="name" 
+                                        style={local.get("theme") === 'dark'
+                                            ? {color: "white"} 
+                                            : {color: "black"}}>
+                                        {item.Title}
+                                    </span>
                                     <a href={title} target="_blank" rel="noreferrer">
                                         <img 
                                         src={item.Poster === 'N/A' ? icon : item.Poster} 

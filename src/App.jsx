@@ -14,6 +14,10 @@ const url = 'https://www.youtube.com/results?search_query='
 const App = ({ search, req, suc, fail, ttl, thm }) => {
 
   useEffect(() => {
+    if (local.get('theme') === null) {
+      local.set('theme', 'light');
+    };
+
     fetchGet()
       .then(res => {
         suc(res.Search)
@@ -55,7 +59,7 @@ const App = ({ search, req, suc, fail, ttl, thm }) => {
 
   return (
     <Router>
-      <div className="container">
+      <div className="container" style={local.get('theme') === 'dark' ? {background: '#000'} : {background: "#fff"}}>
         <Switch>
           <Route exact path='/'>
             <Header handlerHomeClick={handlerHomeClick} onThemeHandler={onThemeHandler} />
@@ -63,7 +67,7 @@ const App = ({ search, req, suc, fail, ttl, thm }) => {
             <Table posterHandler={posterHandler} data={data} value={value} isLoading={isLoading} />
           </Route>
           <Route path='/film/:filmId/:filmTitle'>
-            <Header />
+            <Header handlerHomeClick={handlerHomeClick} onThemeHandler={onThemeHandler}/>
             <FilmPage posterHandler={posterHandler} />
           </Route>
           <Redirect to='/'></Redirect>
