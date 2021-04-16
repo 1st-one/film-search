@@ -11,13 +11,17 @@ import { local } from './gateway';
 
 const url = 'https://www.youtube.com/results?search_query='
 
+export const classElem = (className) => {
+  const result = local.get('theme') === 'dark' ? `${className} dark` : `${className}`;
+  return result;
+};
+
 const App = ({ search, req, suc, fail, ttl, thm }) => {
 
   useEffect(() => {
     if (local.get('theme') === null) {
       local.set('theme', 'light');
     };
-
     fetchGet()
       .then(res => {
         suc(res.Search)
@@ -35,6 +39,7 @@ const App = ({ search, req, suc, fail, ttl, thm }) => {
     fetchGet()
       .then(res => {
         suc(res.Search)
+        req('')
       })
   };
 
@@ -59,16 +64,32 @@ const App = ({ search, req, suc, fail, ttl, thm }) => {
 
   return (
     <Router>
-      <div className="container" style={local.get('theme') === 'dark' ? {background: '#000'} : {background: "#fff"}}>
+      <div className={classElem('container')}>
         <Switch>
           <Route exact path='/'>
-            <Header handlerHomeClick={handlerHomeClick} onThemeHandler={onThemeHandler} />
+            <Header
+              classElem={classElem}
+              handlerHomeClick={handlerHomeClick} 
+              onThemeHandler={onThemeHandler} 
+            />
             <Search handler={handler} />
-            <Table posterHandler={posterHandler} data={data} value={value} isLoading={isLoading} />
+            <Table 
+              classElem={classElem}
+              posterHandler={posterHandler} 
+              data={data} 
+              value={value} 
+              isLoading={isLoading} 
+            />
           </Route>
           <Route path='/film/:filmId/:filmTitle'>
-            <Header handlerHomeClick={handlerHomeClick} onThemeHandler={onThemeHandler}/>
-            <FilmPage posterHandler={posterHandler} />
+            <Header 
+              classElem={classElem}
+              handlerHomeClick={handlerHomeClick} 
+              onThemeHandler={onThemeHandler} 
+            />
+            <FilmPage 
+              posterHandler={posterHandler} 
+            />
           </Route>
           <Redirect to='/'></Redirect>
         </Switch>

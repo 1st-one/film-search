@@ -2,11 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import icon from '../../imgs/defaultIcon.png';
 import { connect } from 'react-redux';
-import { local } from '../../gateway';
-
-const colorDark = {color: "white"};
-const colorWhite = {color: "black"};
-
+import { classElem } from '../../App';
 
 const TableList = ({ search }) => {
 
@@ -22,9 +18,9 @@ const TableList = ({ search }) => {
                             style={{ textDecoration: 'none', color: 'black' }}
                             key={item.imdbID}>
                             <div className="table__list-item">
-                                <span className="name" style={local.get('theme') === 'dark' ? colorDark : colorWhite}>{item.Title}</span>
+                                <span className={classElem('name')}>{item.Title}</span>
                                 <img src={item.Poster !== 'N/A' ? item.Poster : icon} alt="" />
-                                <span className="year" style={local.get('theme') === 'dark' ? colorDark : colorWhite}>{item.Year}</span>
+                                <span className={classElem('year')}>{item.Year}</span>
                             </div>
                         </Link>
                     )

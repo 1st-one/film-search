@@ -10,4 +10,9 @@
     overflow-x: auto;
     min-width: 400px;
     height: 100%;
+    background-color: $dark-color-1;
+
+    &.dark {
+        background-color: $dark-color-2;
+    }
 }

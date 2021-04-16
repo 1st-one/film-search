@@ -10,11 +10,15 @@
         margin: 50px 50px;
         margin-top: 50px;
 
-        span {
+        .title {
             margin-top: 10px;
             font-size: 24px;
             font-family: $font-fam;
             margin-bottom: 20px;
+
+            &.dark {
+                color: $dark-color-1;
+            }
         }
 
         .table__list {
