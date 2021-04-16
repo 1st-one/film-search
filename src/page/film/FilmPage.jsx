@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchGet, local } from '../../gateway';
+import { fetchGet } from '../../gateway';
 import icon from '../../imgs/defaultIcon.png';
 import TableList from '../table/TableList';
 import * as searchAction from '../../store';
+import { classElem } from '../../App';
 
 const FilmPage = ({ search, titleObj, match, posterHandler, suc }) => {
 
@@ -36,10 +37,7 @@ const FilmPage = ({ search, titleObj, match, posterHandler, suc }) => {
                             <div className="table__list">
                                 <div className="table__list-item">
                                     <span 
-                                        className="name" 
-                                        style={local.get("theme") === 'dark'
-                                            ? {color: "white"} 
-                                            : {color: "black"}}>
+                                        className={classElem('name')}>
                                         {item.Title}
                                     </span>
                                     <a href={title} target="_blank" rel="noreferrer">
@@ -55,7 +53,7 @@ const FilmPage = ({ search, titleObj, match, posterHandler, suc }) => {
                     )
                 })}
             <div className="film__similar">
-                <span>Similar Films</span>
+                <span className={classElem('title')}>Similar Films</span>
                 <TableList data={data} />
             </div>
 

@@ -5,7 +5,7 @@ const Table = ({ value, posterHandler }) => {
     return (
         <div className="table">
             <span className="table__label">
-                {value ? `Вот информация по вашему запросу '${value}'` : null}
+                {value ? `Вот информация по вашему запросу '${value}'` : ''}
             </span>
             <TableList posterHandler={posterHandler}/>
         </div>

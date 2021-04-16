@@ -36,10 +36,18 @@
             .name {
                 margin-bottom: 20px;
                 font-size: 25px;
+
+                &.dark {
+                    color: $dark-color-1;
+                }
             }
 
             .year {
                 margin-top: 20px;
+
+                &.dark {
+                    color: $dark-color-1;
+                }
             }
         }
     }

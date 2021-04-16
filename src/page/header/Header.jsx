@@ -2,16 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { local } from '../../gateway';
 
-const Header = ({ handlerHomeClick, onThemeHandler }) => {
-
+const Header = ({ handlerHomeClick, onThemeHandler, classElem }) => {
     return (
-        <div className="header" style={local.get('theme') === 'light' 
-            ? {background: '#2C2E37', color: "black"} 
-            : {background: '#fff', color: "#000"}}>
+        <div className={classElem('header')}>
             <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-                <span className="header__title" onClick={handlerHomeClick} style={local.get('theme') === 'light' 
-                    ? {color: '#fff'} 
-                    : {color: '#000'}}>
+                <span className={classElem('header__title')} onClick={handlerHomeClick}>
                     filmix
                 </span>
             </Link>
